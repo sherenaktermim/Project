@@ -5,6 +5,7 @@ import Notfound from "../pages/static/Notfound";
 import AllProducts from "../pages/products/AllProducts";
 import SignUp from "../pages/login/SignUp";
 import Login from "../pages/login/Login";
+import Loding from "../pages/Loding";
 
 
 const MainRoutes  = createBrowserRouter([
@@ -21,6 +22,7 @@ children:[
     path:"/products/all",
     element:<AllProducts/>
    },
+   
 
 ]
 },
@@ -34,12 +36,17 @@ children:[
 
 {
     path:"/sign-up",
-    element:<SignUp/>
+    element:<SignUp/>,
 },
 {
-    path:"/log-in",
-    element:<Login/>
+    path:"/login",
+    element:<Login/>,
 },
+
+{
+    path:"/loading",
+    element:<Loding/>
+   },
 ])
 
 export default MainRoutes;
