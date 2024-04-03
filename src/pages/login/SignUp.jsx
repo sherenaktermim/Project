@@ -1,8 +1,8 @@
-import { useCreateUserWithEmailAndPassword, } from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword, useUpdateProfile, } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import auth from "../../../Firebase.init";
 import toast from "react-hot-toast";
-import { Link, Navigate, useNavigate,} from "react-router-dom";
+import { Link,useNavigate,} from "react-router-dom";
 import Loding from "../Loding";
 
 const SignUp = () => {
@@ -12,7 +12,8 @@ const SignUp = () => {
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
-      const navigate=useNavigate
+      const [updateProfile, updating,] = useUpdateProfile(auth);
+      const navigate = useNavigate();
 
     const {
         register,
@@ -20,14 +21,17 @@ const SignUp = () => {
         formState: { errors },
       } = useForm();
 
-    const onSubmit=async(data)=>{
-        console.log("data",data);
-        await createUserWithEmailAndPassword(data.Email, data.password);
-        console.log(user)
-        if(user){toast.success("User created successfully");
-      return < Navigate to="/"/>;
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({displayName: data.name});
+       };
+       console.log(user);
+
+        if(user) {
+          toast.success("User created successfully");
+       navigate("/");
       }
-    };
+   
 
 
 
@@ -44,9 +48,7 @@ const SignUp = () => {
            {...register("name", { required: true })}
            placeholder="name"
           />
-          </div>
-
-
+        </div>
 
           <div>
           <label className="block">Password</label>
@@ -56,7 +58,7 @@ const SignUp = () => {
           placeholder="password"
           /> 
           </div>
-
+          {errors.password && (<span className="text-red-600">Password is required</span>)}
 
 
          <div>
@@ -68,19 +70,20 @@ const SignUp = () => {
           />
           </div>
 
+          {errors.email && (<span className="text-red-600">Email is required</span>)}
 
-
-          
-          {errors.Email && (<span className="text-red-600">Email is required</span>)}
-
-          { loading ? (<Loding/>):
+          { loading || updating ? (<Loding/>):
            ( <input className="btn btn-primary block mt-4 w-1/2 text-xl" type="submit" />)
            }
     
-        {
-          error && <h1 className="text-red-700 text-center mt-5 text-2xl">something went wrong.....!</h1>
-        }
+        
  <Link to = "/login" className="text-red-600">Already have an account? Login here.</Link>
+
+        {
+          error && (<h1 className="text-red-700 text-center mt-5 text-2xl">something went wrong.....!</h1>)
+          
+           }
+
         </form>
             </div>
     );
