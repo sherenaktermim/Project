@@ -39,7 +39,7 @@ children:[
     element:<SignUp/>,
 },
 {
-    path:"/login",
+    path:"/log-in",
     element:<Login/>,
 },
 

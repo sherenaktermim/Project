@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link,useNavigate,} from "react-router-dom";
 import Loding from "../Loding";
 
+
 const SignUp = () => {
     const [
         createUserWithEmailAndPassword,
@@ -27,11 +28,11 @@ const SignUp = () => {
        };
        console.log(user);
 
-        if(user) {
-          toast.success("User created successfully");
-       navigate("/");
-      }
-   
+       
+       if(user) {
+        toast.success("User created successfully");
+     navigate("/");
+    }
 
 
 
@@ -77,7 +78,7 @@ const SignUp = () => {
            }
     
         
- <Link to = "/login" className="text-red-600">Already have an account? Login here.</Link>
+ <Link to = "/log-in" className="text-red-600">Already have an account? Login here.</Link>
 
         {
           error && (<h1 className="text-red-700 text-center mt-5 text-2xl">something went wrong.....!</h1>)
